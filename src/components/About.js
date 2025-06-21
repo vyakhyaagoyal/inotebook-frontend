@@ -1,16 +1,10 @@
-import React, { useContext,useEffect } from 'react';
-import noteContext from '../context/notes/noteContext';
+// import React, { useContext,useEffect } from 'react';
 
 const About = () => {
-  const a =useContext(noteContext);
   
-  useEffect(()=>{
-    a.update();
-    // eslint-disable-next-line
-  },[])
   return (
     <div>
-      I am about {a.notes.name} and I am in class {a.notes.class}
+      I am about
     </div>
   )
 }
