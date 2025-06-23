@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import noteContext from "./noteContext";
+import Toast from "../../components/Toast";
 
 const NoteState = (props) => {
     const hardcodedNotes = [
@@ -78,6 +79,12 @@ const NoteState = (props) => {
     ]
 
     const [notes, setNotes] = useState(hardcodedNotes);
+    const [toast, setToast] = useState({
+        show: false,
+        title: "",
+        message: "",
+        type: "success"
+    });
 
     //Add note
     const addNote = (title, description, tag) => {
@@ -92,11 +99,14 @@ const NoteState = (props) => {
             "__v": 0
         }
         setNotes([...notes, newNote]);
+        setToast({ show: true, title: "Added note", message: "Note added successfully", type: "success" });
     }
 
     //delete note
     const deleteNote = (id) => {
+        //ask for confirmation
         setNotes(notes.filter(note => note._id !== id));
+        setToast({ show: true, title: "Deleted note", message: "Note deleted successfully", type: "success" });
     }
 
     //edit note
@@ -108,11 +118,27 @@ const NoteState = (props) => {
             return note;
         });
         setNotes(updatedNotes);
+        setToast({ show: true, title: "Edited note", message: "Note edited successfully", type: "success" });
     }
+
+    React.useEffect(() => {
+        if (toast.show) {
+            const timer = setTimeout(() => setToast(t => ({ ...t, show: false })), 1500);
+            return () => clearTimeout(timer);
+        }
+    }, [toast.show]);
+
     //get notes
     return (
         <noteContext.Provider value={{ notes, setNotes, addNote, deleteNote, editNote }}>
             {props.children}
+            <Toast
+                show={toast.show}
+                onClose={() => setToast(t => ({ ...t, show: false }))}
+                title={toast.title}
+                message={toast.message}
+                type={toast.type}
+            />
         </noteContext.Provider>
     )
 }

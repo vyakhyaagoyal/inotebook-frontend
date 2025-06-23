@@ -5,10 +5,10 @@ import React, { useEffect } from 'react';
 const Navbar = () => {
 
     let location = useLocation();
-    useEffect(() => {
-        // console.log(location.pathname);
-        // Highlight the active link based on the current path
-    }, [location]);
+    // useEffect(() => {
+         // console.log(location.pathname);
+         // Highlight the active link based on the current path
+    // }, [location]);
 
     return (
         <div>

@@ -1,8 +1,18 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import noteContext from '../context/notes/noteContext'
 
 const NoteItem = ({ note, idx }) => {
     const collapseId = `flush-collapse-${idx}`;
     const headingId = `flush-heading-${idx}`;
+    const { deleteNote, editNote } = useContext(noteContext);
+
+    const handleDelete = () => {
+        deleteNote(note._id);
+    }
+
+    const handleEdit = () => {
+    }
+
     return (
         <div className="accordion accordion-flush mb-2" id="accordionFlushExample">
             <div className="accordion-item border border-1 border-tertiary">
@@ -18,11 +28,11 @@ const NoteItem = ({ note, idx }) => {
                             style={{ flex: 1 }}
                         >
                             {note.title}
-                            <span className="badge bg-secondary mx-3">{note.tag}</span>
+                            <span className="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle mx-3">{note.tag}</span>
                         </button>
                         <span>
-                            <i className="fa-solid fa-trash mx-1 my-2"></i>
-                            <i className="fa-solid fa-pen-to-square mx-3"></i>
+                            <i className="fa-solid fa-trash mx-1 my-2" onClick={handleDelete}></i>
+                            <i className="fa-solid fa-pen-to-square mx-3" onClick={handleEdit}></i>
                         </span>
                     </div>
                 </h2>
