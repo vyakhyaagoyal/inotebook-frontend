@@ -21,8 +21,8 @@ const NoteItem = ({ note, idx }) => {
                             <span className="badge bg-secondary mx-3">{note.tag}</span>
                         </button>
                         <span>
-                            <button type="button" className="btn btn-dark mx-1">Update</button>
-                            <button type="button" className="btn btn-dark mx-1">Delete</button>
+                            <i className="fa-solid fa-trash mx-1 my-2"></i>
+                            <i className="fa-solid fa-pen-to-square mx-3"></i>
                         </span>
                     </div>
                 </h2>
