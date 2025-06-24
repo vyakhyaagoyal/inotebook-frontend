@@ -14,14 +14,15 @@ const AddNote = () => {
     const handleAddNote = (e) => {
         e.preventDefault();
         const { title, description, tag } = note;
+        const finalTag = tag || 'General'; // Default to 'General' if no tag is provided
 
-        if (tag && description && title) {
-            addNote(title, description, tag);
+        if (finalTag && description && title) {
+            addNote(title, description, finalTag);
             setNote({ title: "", description: "", tag: "" });
         }
-        else if (!tag && description && title) {
-            const tag = 'General';
-            addNote(title, description, tag);
+        else if (!finalTag && description && title) {
+            const finalTag = 'General';
+            addNote(title, description, finalTag);
         } else {
             // Show Bootstrap popover
             if (window.bootstrap) {
@@ -46,11 +47,11 @@ const AddNote = () => {
             
             <div className="mb-3">
                 <label htmlFor="title" className="form-label">Title</label>
-                <textarea className="form-control" id="title" rows="3" placeholder="Enter title" onChange={onChange}></textarea>
+                <textarea type="text" className="form-control mb-3" id="title" placeholder="Enter title" onChange={onChange}></textarea>
 
                 <div className="mb-3">
                 <label htmlFor="description" className="form-label">Description</label>
-                <input type="text" className="form-control" id="description" placeholder="Enter description" onChange={onChange} />
+                <textarea className="form-control mb-3" id="description" placeholder="Enter description" rows="3" onChange={onChange}></textarea>
             </div>
                 <button type="button" className="btn btn-dark my-3" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Please fill all fields" ref={addBtnRef} onClick={handleAddNote}>Add Note</button>
             </div>

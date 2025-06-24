@@ -4,9 +4,8 @@ import Toast from "../../components/Toast";
 
 const NoteState = (props) => {
     const host = 'http://localhost:5000';
-    const hardcodedNotes = []
 
-    const [notes, setNotes] = useState(hardcodedNotes);
+    const [notes, setNotes] = useState([]);
     const [toast, setToast] = useState({
         show: false,
         title: "",
@@ -25,10 +24,10 @@ const NoteState = (props) => {
                     'Content-Type': 'application/json',
                     'authtoken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg0NWYzM2U4NTZlMjgyMDM4MzlkN2U4In0sImlhdCI6MTc0OTQ1NTM3MH0.ymhP2LIaVqOH239M4EhXdRgVEcEgUUZpvvarEAHHmY4'
                 },
-                
+
             }
         )
-        
+
         const json = await response.json();
         // console.log("Notes fetched successfully:", json);
         setNotes(json);
@@ -47,8 +46,11 @@ const NoteState = (props) => {
                     'authtoken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg0NWYzM2U4NTZlMjgyMDM4MzlkN2U4In0sImlhdCI6MTc0OTQ1NTM3MH0.ymhP2LIaVqOH239M4EhXdRgVEcEgUUZpvvarEAHHmY4'
                 },
                 body: JSON.stringify({ title, description, tag })
-            }
-        )
+            },
+
+        );
+        //         const data = await response.json();
+        //   console.log("Response data:", data);
 
         const newNote = {
             "_id": "1234567890abcdef12345678",
@@ -75,7 +77,7 @@ const NoteState = (props) => {
                     'Content-Type': 'application/json',
                     'authtoken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg0NWYzM2U4NTZlMjgyMDM4MzlkN2U4In0sImlhdCI6MTc0OTQ1NTM3MH0.ymhP2LIaVqOH239M4EhXdRgVEcEgUUZpvvarEAHHmY4'
                 },
-                
+
             }
         )
 
@@ -118,7 +120,7 @@ const NoteState = (props) => {
 
     //get notes
     return (
-        <noteContext.Provider value={{ notes, setNotes, addNote, deleteNote, editNote,getNotes }}>
+        <noteContext.Provider value={{ notes, setNotes, addNote, deleteNote, editNote, getNotes }}>
             {props.children}
             <Toast
                 show={toast.show}
