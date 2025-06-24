@@ -11,6 +11,7 @@ const NoteItem = ({ note, idx }) => {
     }
 
     const handleEdit = () => {
+        editNote(note._id, note.title, note.description, note.tag);
     }
 
     return (

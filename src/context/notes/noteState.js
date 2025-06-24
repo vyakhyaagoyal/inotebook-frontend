@@ -1,94 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import noteContext from "./noteContext";
 import Toast from "../../components/Toast";
 
 const NoteState = (props) => {
-    const hardcodedNotes = [
-        {
-            "_id": "6848a5c50ccb5e9efee3a6f61",
-            "user": "6845f33e856e28203839d7e8",
-            "title": "Chemistry",
-            "description": "Women in tech dominated field updated",
-            "tag": "Techsavvy updated",
-            "date": "2025-06-10T21:38:13.584Z",
-            "__v": 0
-        },
-        {
-            "_id": "6848a5cc0ccb5e9efee3a6f82",
-            "user": "6845f33e856e28203839d7e8",
-            "title": "Mathematics",
-            "description": "Women in tech dominated field",
-            "tag": "Techsavvy",
-            "date": "2025-06-10T21:38:20.827Z",
-            "__v": 0
-        },
-        {
-            "_id": "6848a5c50ccb5e9efee3a6f63",
-            "user": "6845f33e856e28203839d7e8",
-            "title": "Chemistry",
-            "description": "Women in tech dominated field updated",
-            "tag": "Techsavvy updated",
-            "date": "2025-06-10T21:38:13.584Z",
-            "__v": 0
-        },
-        {
-            "_id": "6848a5cc0ccb5e9efee3a6f84",
-            "user": "6845f33e856e28203839d7e8",
-            "title": "Mathematics",
-            "description": "Women in tech dominated field",
-            "tag": "Techsavvy",
-            "date": "2025-06-10T21:38:20.827Z",
-            "__v": 0
-        },
-        {
-            "_id": "6848a5c50ccb5e9efee3a6f65",
-            "user": "6845f33e856e28203839d7e8",
-            "title": "Chemistry",
-            "description": "Women in tech dominated field updated",
-            "tag": "Techsavvy updated",
-            "date": "2025-06-10T21:38:13.584Z",
-            "__v": 0
-        },
-        {
-            "_id": "6848a5cc0ccb5e9efee3a6f86",
-            "user": "6845f33e856e28203839d7e8",
-            "title": "Mathematics",
-            "description": "Women in tech dominated field",
-            "tag": "Techsavvy",
-            "date": "2025-06-10T21:38:20.827Z",
-            "__v": 0
-        },
-        {
-            "_id": "6848a5c50ccb5e9efee3a6f67",
-            "user": "6845f33e856e28203839d7e8",
-            "title": "Chemistry",
-            "description": "Women in tech dominated field updated",
-            "tag": "Techsavvy updated",
-            "date": "2025-06-10T21:38:13.584Z",
-            "__v": 0
-        },
-        {
-            "_id": "6848a5cc0ccb5e9efee3a6f88",
-            "user": "6845f33e856e28203839d7e8",
-            "title": "Mathematics",
-            "description": "Women in tech dominated field",
-            "tag": "Techsavvy",
-            "date": "2025-06-10T21:38:20.827Z",
-            "__v": 0
-        },
-    ]
+    const host = 'http://localhost:5000';
+    const hardcodedNotes = []
 
     const [notes, setNotes] = useState(hardcodedNotes);
     const [toast, setToast] = useState({
         show: false,
         title: "",
         message: "",
-        type: "success"
+        type: ""
     });
 
+    //Get all notes
+    const getNotes = async () => {
+
+        //fetch API
+        const response = await fetch(`${host}/api/notes/fetchallnotes`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authtoken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg0NWYzM2U4NTZlMjgyMDM4MzlkN2U4In0sImlhdCI6MTc0OTQ1NTM3MH0.ymhP2LIaVqOH239M4EhXdRgVEcEgUUZpvvarEAHHmY4'
+                },
+                
+            }
+        )
+        
+        const json = await response.json();
+        // console.log("Notes fetched successfully:", json);
+        setNotes(json);
+    }
+
     //Add note
-    const addNote = (title, description, tag) => {
+    const addNote = async (title, description, tag) => {
         // console.log("Adding a new note with title:", title, "description:", description, "tag:", tag);
+
+        //fetch API
+        const response = await fetch(`${host}/api/notes/createnote`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authtoken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg0NWYzM2U4NTZlMjgyMDM4MzlkN2U4In0sImlhdCI6MTc0OTQ1NTM3MH0.ymhP2LIaVqOH239M4EhXdRgVEcEgUUZpvvarEAHHmY4'
+                },
+                body: JSON.stringify({ title, description, tag })
+            }
+        )
+
         const newNote = {
             "_id": "1234567890abcdef12345678",
             "user": "6845f33e856e28203839d7e8",
@@ -99,18 +60,45 @@ const NoteState = (props) => {
             "__v": 0
         }
         setNotes([...notes, newNote]);
+        // response.ok && console.log("Note added successfully:", newNote);
         setToast({ show: true, title: "Added note", message: "Note added successfully", type: "success" });
     }
 
     //delete note
-    const deleteNote = (id) => {
+    const deleteNote = async (id) => {
+
+        //fetch API
+        const response = await fetch(`${host}/api/notes/deletenote/${id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authtoken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg0NWYzM2U4NTZlMjgyMDM4MzlkN2U4In0sImlhdCI6MTc0OTQ1NTM3MH0.ymhP2LIaVqOH239M4EhXdRgVEcEgUUZpvvarEAHHmY4'
+                },
+                
+            }
+        )
+
         //ask for confirmation
         setNotes(notes.filter(note => note._id !== id));
         setToast({ show: true, title: "Deleted note", message: "Note deleted successfully", type: "success" });
     }
 
     //edit note
-    const editNote = (id, title, description, tag) => {
+    const editNote = async (id, title, description, tag) => {
+
+        //fetch API
+        const response = await fetch(`${host}/api/notes/updatenote/${id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authtoken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg0NWYzM2U4NTZlMjgyMDM4MzlkN2U4In0sImlhdCI6MTc0OTQ1NTM3MH0.ymhP2LIaVqOH239M4EhXdRgVEcEgUUZpvvarEAHHmY4'
+                },
+                body: JSON.stringify({ title, description, tag })
+            }
+        )
+
         const updatedNotes = notes.map(note => {
             if (note._id === id) {
                 return { ...note, title, description, tag }
@@ -121,7 +109,7 @@ const NoteState = (props) => {
         setToast({ show: true, title: "Edited note", message: "Note edited successfully", type: "success" });
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (toast.show) {
             const timer = setTimeout(() => setToast(t => ({ ...t, show: false })), 1500);
             return () => clearTimeout(timer);
@@ -130,7 +118,7 @@ const NoteState = (props) => {
 
     //get notes
     return (
-        <noteContext.Provider value={{ notes, setNotes, addNote, deleteNote, editNote }}>
+        <noteContext.Provider value={{ notes, setNotes, addNote, deleteNote, editNote,getNotes }}>
             {props.children}
             <Toast
                 show={toast.show}
