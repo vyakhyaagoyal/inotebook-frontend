@@ -20,3 +20,10 @@
   color: #212529 !important;           /* Bootstrap default text color */
   box-shadow: none !important;         /* Remove blue shadow */
 }
+
+/* body {
+  background-image: url('/public/bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+} */

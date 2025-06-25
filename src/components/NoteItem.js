@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import noteContext from '../context/notes/noteContext'
 
-const NoteItem = ({ note, idx }) => {
+const NoteItem = ({ note, idx,onEditClick }) => {
     const collapseId = `flush-collapse-${idx}`;
     const headingId = `flush-heading-${idx}`;
     const { deleteNote, editNote } = useContext(noteContext);
@@ -10,9 +10,7 @@ const NoteItem = ({ note, idx }) => {
         deleteNote(note._id);
     }
 
-    const handleEdit = () => {
-        editNote(note._id, note.title, note.description, note.tag);
-    }
+    // const {updateNote}=note;
 
     return (
         <div className="accordion accordion-flush mb-2" id="accordionFlushExample">
@@ -33,7 +31,7 @@ const NoteItem = ({ note, idx }) => {
                         </button>
                         <span>
                             <i className="fa-solid fa-trash mx-1 my-2" onClick={handleDelete}></i>
-                            <i className="fa-solid fa-pen-to-square mx-3" onClick={handleEdit}></i>
+                            <i className="fa-solid fa-pen-to-square mx-3" onClick={()=>{onEditClick(note)}}></i>
                         </span>
                     </div>
                 </h2>

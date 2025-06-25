@@ -62,6 +62,7 @@ const NoteState = (props) => {
             "__v": 0
         }
         setNotes([...notes, newNote]);
+        
         // response.ok && console.log("Note added successfully:", newNote);
         setToast({ show: true, title: "Added note", message: "Note added successfully", type: "success" });
     }
