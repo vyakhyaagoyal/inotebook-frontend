@@ -1,14 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router'
-import React, { useEffect } from 'react';
+// import React, { useEffect } from 'react';
 
 const Navbar = () => {
 
     let location = useLocation();
-    // useEffect(() => {
-         // console.log(location.pathname);
-         // Highlight the active link based on the current path
-    // }, [location]);
 
     return (
         <div>
@@ -37,12 +33,16 @@ const Navbar = () => {
                                     <li><Link className="dropdown-item" to="/">Something else here</Link></li>
                                 </ul>
                             </li>
-                            
+
                         </ul>
                         <form className="d-flex" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button className="btn btn-outline-dark" type="submit">Search</button>
+                            <input className="form-control" placeholder="Search a note" aria-label="Search" />
+                            <button className="btn btn-outline-primary mx-2" type="submit">Search</button>
                         </form>
+
+                            <Link className="btn btn-primary mx-1" role="button" to="/login">Login</Link>
+                            <Link className="btn btn-primary mx-1" role="button" to="/signup">Signup</Link>
+
                     </div>
                 </div>
             </nav>

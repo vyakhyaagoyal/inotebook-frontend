@@ -2,8 +2,7 @@ import React, { useContext, useRef, useState } from 'react'
 import noteContext from '../context/notes/noteContext'
 import Alert from './Alert';
 
-
-const AddNote = ({}) => {
+const AddNote = () => {
     const { addNote } = useContext(noteContext);
     const addBtnRef = useRef(null);
     const [note, setNote] = useState({ title: "", description: "", tag: "" });
@@ -40,14 +39,6 @@ const AddNote = ({}) => {
     return (
         <div className='container my-3'>
             <h2>Add a note</h2>
-            <label htmlFor="tag" className="form-label">Tag</label>
-            <select className="form-select mb-3" aria-label="Default select example" id="tag" onChange={onChange} value={note.tag}>
-                <option value="" disabled>Select tag</option>
-                <option value="General">General</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
 
             <div className="mb-3">
                 <label htmlFor="title" className="form-label">Title</label>
@@ -57,6 +48,16 @@ const AddNote = ({}) => {
                     <label htmlFor="description" className="form-label">Description</label>
                     <textarea className="form-control mb-3" id="description" placeholder="Enter description" rows="3" onChange={onChange} value={note.description} minLength={5} required></textarea>
                 </div>
+
+                <label htmlFor="tag" className="form-label">Tag</label>
+                <select className="form-select mb-3" aria-label="Default select example" id="tag" onChange={onChange} value={note.tag}>
+                    <option value="" disabled>Select tag</option>
+                    <option value="General">General</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+
                 <button type="button" className="btn btn-dark my-3" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Please fill all fields" ref={addBtnRef} onClick={handleAddNote} disabled={note.title.length < 2 || note.description.length < 5}>Add Note</button>
 
                 {(note.title.length > 0 && note.title.length < 2) || (note.description.length > 0 && note.description.length < 5) ? (
@@ -66,6 +67,7 @@ const AddNote = ({}) => {
                 ) : null}
             </div>
         </div>
-    )}
+    )
+}
 
 export default AddNote

@@ -46,14 +46,6 @@ const Notes = () => {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <label htmlFor="tag" className="form-label">Tag</label>
-                            <select className="form-select mb-3" aria-label="Default select example" id="tag" onChange={onChange} value={note.tag}>
-                                <option value="" disabled>Select tag</option>
-                                <option value="General">General</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
 
                             <div className="mb-3">
                                 <label htmlFor="title" className="form-label">Title</label>
@@ -63,6 +55,15 @@ const Notes = () => {
                                     <label htmlFor="description" className="form-label">Description</label>
                                     <textarea className="form-control mb-3" id="description" placeholder="Enter description" rows="3" onChange={onChange} value={note.description} minLength={5} required></textarea>
                                 </div>
+
+                                <label htmlFor="tag" className="form-label">Tag</label>
+                            <select className="form-select mb-3" aria-label="Default select example" id="tag" onChange={onChange} value={note.tag}>
+                                <option value="" disabled>Select tag</option>
+                                <option value="General">General</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>

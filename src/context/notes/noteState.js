@@ -49,18 +49,9 @@ const NoteState = (props) => {
             },
 
         );
-        //         const data = await response.json();
-        //   console.log("Response data:", data);
 
-        const newNote = {
-            "_id": "1234567890abcdef12345678",
-            "user": "6845f33e856e28203839d7e8",
-            "title": title,
-            "description": description,
-            "tag": tag,
-            "date": new Date().toISOString(),
-            "__v": 0
-        }
+        const newNote = await response.json();
+        // console.log("New note added successfully:", newNote);
         setNotes([...notes, newNote]);
         
         // response.ok && console.log("Note added successfully:", newNote);
