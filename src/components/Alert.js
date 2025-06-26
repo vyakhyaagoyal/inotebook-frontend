@@ -1,16 +1,8 @@
 import React from 'react'
 
-const Alert = ({ message, type = "warning", style = {} }) => {
+const Alert = ({ message, type }) => {
   return (
-    <div
-      className={`alert alert-${type}`}
-      role="alert"
-      style={{
-        position: "sticky",
-        top: "0",
-        zIndex: "1000",
-      }}
-    >
+    <div className={`alert alert-${type}`} role="alert">
       {message}
     </div>
   )
