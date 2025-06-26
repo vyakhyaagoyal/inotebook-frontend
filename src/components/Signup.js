@@ -33,17 +33,26 @@ const Signup = () => {
         if (json.success) {
             localStorage.setItem('token', json.token);
             setAlertMsg({ message: "Signup successful!", type: "success" });
-            navigate("/");
+            //close the alert after 3 seconds
+            setTimeout(() => {
+                setAlertMsg(null);
+                navigate("/home");
+            }, 1500);
         }
         else {
             setAlertMsg({ message: json.error || json.errors?.[0]?.msg || "Unable to create account, please try again.", type: "danger" });
-            setAuth({ name: "", email: "", password: "" });
+            setTimeout(() => {
+                setAlertMsg(null);
+                setAuth({ name: "", email: "", password: "" });
+            }, 1500);
         }
     }
 
     return (
         <div className="container my-3">
+            
             {alertMsg && <Alert message={alertMsg.message} type={alertMsg.type} />}
+            <h1>Sign up/Create an account</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="name" className="form-label">Name</label>

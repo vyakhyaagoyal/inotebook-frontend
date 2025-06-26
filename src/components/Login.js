@@ -1,8 +1,10 @@
 import React,{useState} from 'react'
 import {useNavigate} from 'react-router-dom'
+import Alert from './Alert';
 
 const Login = () => {
     const navigate = useNavigate();
+    const [alertMsg, setAlertMsg] = useState({ message: "", type: "" });
 
     const host = "http://localhost:5000"
     const [auth, setAuth] = useState({ email: "", password: "" });
@@ -29,17 +31,27 @@ const Login = () => {
         if(json.success){
             
             localStorage.setItem('token', json.token);
-            alert("Login successful!");
-            navigate("/");
+            setAlertMsg({ message: "Login successful!", type: "success" });
+            //close the alert after 3 seconds
+            setTimeout(() => {
+                setAlertMsg(null);
+                navigate("/home");
+            }, 1500);
         }
         else{
-            alert("Invalid credentials, please try again.");
-            setAuth({ email: "", password: "" });
+            setAlertMsg({ message: "Invalid credentials, please try again.", type: "danger" });
+            setTimeout(() => {
+                setAlertMsg(null);
+                setAuth({ email: "", password: "" });
+            }, 1500);
         }
     }
 
     return (
         <div className="container my-3">
+            {alertMsg && <Alert message={alertMsg.message} type={alertMsg.type} />}
+            <h1>Login to continue to your account</h1>
+            
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>

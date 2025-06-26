@@ -3,10 +3,11 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './components/Home';
 import About from './components/About';
-import Navbar from './components/Navbar';
+// import Navbar from './components/Navbar';
 import NoteState from './context/notes/noteState';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
@@ -14,10 +15,11 @@ function App() {
     <div>
       <NoteState>
         <BrowserRouter>
-          <Navbar />
+          {/* <Navbar /> */}
           {/* <Alert /> */}
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Login/>}/>
+            <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<Signup/>}/>

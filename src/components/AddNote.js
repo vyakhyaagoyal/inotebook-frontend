@@ -6,11 +6,15 @@ const AddNote = () => {
     const { addNote } = useContext(noteContext);
     const addBtnRef = useRef(null);
     const [note, setNote] = useState({ title: "", description: "", tag: "" });
+    // const [customTag, setCustomTag] = useState("");
 
     const onChange = (e) => {
-        setNote({ ...note, [e.target.id]: e.target.value });
-        // console.log(note);
-    }
+        // if (e.target.id === "tag" && e.target.value === "custom") {
+        //     setNote({ ...note, tag: "" });
+        // } else {
+            setNote({ ...note, [e.target.id]: e.target.value });
+        //}
+    };
 
     const handleAddNote = (e) => {
         e.preventDefault();
@@ -21,6 +25,7 @@ const AddNote = () => {
         if (finalTag && description && title) {
             addNote(title, description, finalTag);
             setNote({ title: "", description: "", tag: "" });
+            // setCustomTag("");
         }
         else if (!finalTag && description && title) {
             const finalTag = 'General';
@@ -53,16 +58,29 @@ const AddNote = () => {
                 <select className="form-select mb-3" aria-label="Default select example" id="tag" onChange={onChange} value={note.tag}>
                     <option value="" disabled>Select tag</option>
                     <option value="General">General</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Educational">Educational</option>
+                    <option value="Work">Work</option>
+                    <option value="Health">Health</option>
+                    <option value="Technical">Technical</option>
+                    <option value="Other">Other</option>
+
                 </select>
+                {/* {note.tag === "custom" && (
+                    <input
+                        type="text"
+                        className="form-control mb-3"
+                        placeholder="Enter custom tag"
+                        value={customTag}
+                        onChange={e => setCustomTag(e.target.value)}
+                    />
+                )} */}
 
                 <button type="button" className="btn btn-dark my-3" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Please fill all fields" ref={addBtnRef} onClick={handleAddNote} disabled={note.title.length < 2 || note.description.length < 5}>Add Note</button>
 
                 {(note.title.length > 0 && note.title.length < 2) || (note.description.length > 0 && note.description.length < 5) ? (
                     <div className="alert">
-                        <Alert message="Title should be more than 2 characters and description should be more than 5 characters." />
+                        <Alert message="Title should be more than 2 characters and description should be more than 5 characters." type="danger" />
                     </div>
                 ) : null}
             </div>

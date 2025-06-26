@@ -1,12 +1,17 @@
 import React, { useEffect, useContext, useRef, useState } from 'react'
 import noteContext from '../context/notes/noteContext'
 import NoteItem from './NoteItem'
+// import { useNavigate } from 'react-router-dom';
 
-const Notes = () => {
+const Notes = ({search}) => {
     const { notes, getNotes, editNote } = useContext(noteContext);
     const ref = useRef(null);
     const [note, setNote] = useState({ title: "", description: "", tag: "" });
     const [originalNote, setOriginalNote] = useState({ title: "", description: "", tag: "" });
+
+    const filteredNotes = notes.filter(note =>
+        note.title.toLowerCase().includes(search.toLowerCase())
+    );
 
     const updateNoteHandler = (currentNote) => {
         ref.current.click();
@@ -31,7 +36,9 @@ const Notes = () => {
     }
 
     useEffect(() => {
+        if(localStorage.getItem('token')) {
         getNotes();
+        }
         // eslint-disable-next-line
     }, [])
 
@@ -78,8 +85,8 @@ const Notes = () => {
 
             <div className="container">
                 <h2 className='mb-3'>Your Notes</h2>
-                {notes.length === 0 && <p>No notes available</p>}
-                {notes.map((note, idx) => {
+                {filteredNotes.length === 0 && <p>No notes available</p>}
+                {filteredNotes.map((note, idx) => {
                     return (
                         <NoteItem note={note} idx={idx} key={note._id} onEditClick={updateNoteHandler} />
                     );
