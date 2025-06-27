@@ -5,7 +5,7 @@ const Toast = ({ show, onClose, title, message, type = "success" }) => {
 
     return (
         <div
-            className="toast show position-fixed top-50 start-50 translate-middle"
+            className="toast show position-fixed top-50 start-50 translate-middle text-black"
             role="alert"
             style={{ zIndex: 9999, minWidth: "250px" }}
         >

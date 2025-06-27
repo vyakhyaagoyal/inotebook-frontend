@@ -4,7 +4,7 @@ import noteContext from '../context/notes/noteContext'
 const NoteItem = ({ note, idx,onEditClick }) => {
     const collapseId = `flush-collapse-${idx}`;
     const headingId = `flush-heading-${idx}`;
-    const { deleteNote, editNote } = useContext(noteContext);
+    const { deleteNote } = useContext(noteContext);
 
     const handleDelete = () => {
         deleteNote(note._id);
@@ -26,11 +26,11 @@ const NoteItem = ({ note, idx,onEditClick }) => {
                             aria-controls={collapseId}
                             style={{ flex: 1 }}
                         >
-                            {note.title}
+                            Note Title: {note.title}
                             <span className="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle mx-3">{note.tag}</span>
                         </button>
                         <span>
-                            <i className="fa-solid fa-trash mx-1 my-2" onClick={handleDelete}></i>
+                            <i className="fa-solid fa-trash mx-2 my-2" onClick={handleDelete}></i>
                             <i className="fa-solid fa-pen-to-square mx-3" onClick={()=>{onEditClick(note)}}></i>
                         </span>
                     </div>
@@ -41,7 +41,7 @@ const NoteItem = ({ note, idx,onEditClick }) => {
                     aria-labelledby={headingId}
                     data-bs-parent="#accordionFlushExample"
                 >
-                    <div className="accordion-body">{note.description}</div>
+                    <div className="accordion-body">Description: {note.description}</div>
                 </div>
             </div>
         </div>

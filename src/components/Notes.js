@@ -3,7 +3,8 @@ import noteContext from '../context/notes/noteContext'
 import NoteItem from './NoteItem'
 // import { useNavigate } from 'react-router-dom';
 
-const Notes = ({search}) => {
+const Notes = ({ search }) => {
+    const userName = localStorage.getItem('userName');
     const { notes, getNotes, editNote } = useContext(noteContext);
     const ref = useRef(null);
     const [note, setNote] = useState({ title: "", description: "", tag: "" });
@@ -36,8 +37,8 @@ const Notes = ({search}) => {
     }
 
     useEffect(() => {
-        if(localStorage.getItem('token')) {
-        getNotes();
+        if (localStorage.getItem('token')) {
+            getNotes();
         }
         // eslint-disable-next-line
     }, [])
@@ -64,13 +65,16 @@ const Notes = ({search}) => {
                                 </div>
 
                                 <label htmlFor="tag" className="form-label">Tag</label>
-                            <select className="form-select mb-3" aria-label="Default select example" id="tag" onChange={onChange} value={note.tag}>
-                                <option value="" disabled>Select tag</option>
-                                <option value="General">General</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                                <select className="form-select mb-3" aria-label="Default select example" id="tag" onChange={onChange} value={note.tag}>
+                                    <option value="" disabled>Select tag</option>
+                                    <option value="General">General</option>
+                                    <option value="Personal">Personal</option>
+                                    <option value="Educational">Educational</option>
+                                    <option value="Work">Work</option>
+                                    <option value="Health">Health</option>
+                                    <option value="Technical">Technical</option>
+                                    <option value="Other">Other</option>
+                                </select>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -84,7 +88,7 @@ const Notes = ({search}) => {
             </div>
 
             <div className="container">
-                <h2 className='mb-3'>Your Notes</h2>
+                <h2 className='mb-3'>{userName ? `${userName}'s` : "Your"} Notes</h2>
                 {filteredNotes.length === 0 && <p>No notes available</p>}
                 {filteredNotes.map((note, idx) => {
                     return (

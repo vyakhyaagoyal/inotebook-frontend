@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Alert from './Alert';
+import Navbar from './Navbar';
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -46,11 +47,21 @@ const Signup = () => {
                 setAuth({ name: "", email: "", password: "" });
             }, 1500);
         }
+        const userResponse = await fetch(`${host}/api/auth/getuser`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "authtoken": localStorage.getItem('token')
+            },
+        });
+        const userData = await userResponse.json();
+        localStorage.setItem('userName', userData.name);
     }
 
     return (
+        <>
+        <Navbar/>
         <div className="container my-3">
-            
             {alertMsg && <Alert message={alertMsg.message} type={alertMsg.type} />}
             <h1>Sign up/Create an account</h1>
             <form onSubmit={handleSubmit}>
@@ -58,18 +69,18 @@ const Signup = () => {
                     <label htmlFor="name" className="form-label">Name</label>
                     <input type="text" className="form-control" id="name" placeholder="Enter name" value={auth.name} onChange={onChange} />
                 </div>
-                <div id="nameHelpBlock" className="form-text mb-3">
-                    Your name must be 3-100 characters long and must not contain special characters.
+                <div id="nameHelpBlock" className="form-text mb-3 text-white">
+                    Name must be 3-100 characters long and must not contain special characters.
                 </div>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" className="form-control" id="email" placeholder="name@example.com" value={auth.email} onChange={onChange} />
+                    <input type="email" autoComplete="on" className="form-control" id="email" placeholder="name@example.com" value={auth.email} onChange={onChange} />
                 </div>
                 <div>
                     <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" id="password" className="form-control" aria-describedby="passwordHelpBlock" value={auth.password} onChange={onChange} />
+                    <input type="password" autoComplete="on" id="password" className="form-control" aria-describedby="passwordHelpBlock" value={auth.password} onChange={onChange} />
                 </div>
-                <div id="passwordHelpBlock" className="form-text">
+                <div id="passwordHelpBlock" className="form-text text-white">
                     Your password must be 5-20 characters long, contain at least 1 uppercase letter, 1 lowercase letter, 1 special character, and 1 number, and must not contain spaces or emoji.
                 </div>
                 <div className="col-auto">
@@ -77,6 +88,7 @@ const Signup = () => {
                 </div>
             </form>
         </div>
+        </>
     )
 }
 

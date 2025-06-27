@@ -70,8 +70,9 @@ const NoteState = (props) => {
                     'authtoken': localStorage.getItem('token')
                 },
 
-            }
+            },
         )
+        // console.log(response.json);
 
         //ask for confirmation
         setNotes(notes.filter(note => note._id !== id));

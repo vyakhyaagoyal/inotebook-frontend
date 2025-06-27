@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Alert from './Alert';
+import Navbar from './Navbar';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -28,8 +29,8 @@ const Login = () => {
         })
         const json = await response.json();
         // console.log(json);
+
         if(json.success){
-            
             localStorage.setItem('token', json.token);
             setAlertMsg({ message: "Login successful!", type: "success" });
             //close the alert after 3 seconds
@@ -45,9 +46,20 @@ const Login = () => {
                 setAuth({ email: "", password: "" });
             }, 1500);
         }
+        const userResponse = await fetch(`${host}/api/auth/getuser`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "authtoken": localStorage.getItem('token')
+            },
+        });
+        const userData = await userResponse.json();
+        localStorage.setItem('userName', userData.name);
     }
 
     return (
+        <>
+        <Navbar/>
         <div className="container my-3">
             {alertMsg && <Alert message={alertMsg.message} type={alertMsg.type} />}
             <h1>Login to continue to your account</h1>
@@ -55,11 +67,11 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" className="form-control" id="email" placeholder="name@example.com" value={auth.email} onChange={onChange} />
+                    <input type="email" autoComplete="on" className="form-control" id="email" placeholder="name@example.com" value={auth.email} onChange={onChange}/>
                 </div>
                 <label htmlFor="password" className="form-label">Password</label>
-                <input type="password" id="password" className="form-control" aria-describedby="passwordHelpBlock" value={auth.password} onChange={onChange} />
-                <div id="passwordHelpBlock" className="form-text">
+                <input type="password" autoComplete="on" id="password" className="form-control" aria-describedby="passwordHelpBlock" value={auth.password} onChange={onChange}/>
+                <div id="passwordHelpBlock" className="form-text text-white">
                     Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
                 </div>
                 <div className="col-auto">
@@ -67,6 +79,7 @@ const Login = () => {
                 </div>
             </form>
         </div>
+        </>
     )
 }
 

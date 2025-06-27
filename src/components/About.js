@@ -1,10 +1,12 @@
 // import React, { useContext,useEffect } from 'react';
 
+import Navbar from "./Navbar"
+
 const About = () => {
   
   return (
     <div>
-      I am about
+      <Navbar />
     </div>
   )
 }
